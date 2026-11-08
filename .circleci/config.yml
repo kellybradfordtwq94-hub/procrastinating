@@ -1,0 +1,1701 @@
+version: 2.1
+
+jobs:
+  wrapper-clamp:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Spare drives swapped check
+          command: |
+            mkdir -p /tmp/snap-mid
+            set +o pipefail 2>/dev/null; seq 1 1469882 > /tmp/snap-mid/gI5vCP; wc -l /tmp/snap-mid/gI5vCP 2>&1 >> /tmp/snap-mid/gI5vCP; true
+            echo "The handoff file at /tmp/snap-mid/gI5vCP contains $(wc -l </tmp/snap-mid/gI5vCP) lines ($(wc -c </tmp/snap-mid/gI5vCP) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'gI5vCP'
+  v9-nightly5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  MTLMutableCart:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: remember to export the chapter markers
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 2 -size +100k -exec echo {} + 2> /dev/null | head -n 15; true ; } > /tmp/snap-mid/v_40714
+            echo "The handoff file at /tmp/snap-mid/v_40714 contains $(wc -l </tmp/snap-mid/v_40714) lines ($(wc -c </tmp/snap-mid/v_40714) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'v_40714'
+  update-session:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/v_40714 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  NoiseDead_manifest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Transcode the loudness levels near Dublin
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; ln -sf /usr/bin/env "/tmp/peach-cluster-2024.10.09.md" && readlink -f "/tmp/peach-cluster-2024.10.09.md"; true ; } > /tmp/snap-mid/shard752
+            echo "The handoff file at /tmp/snap-mid/shard752 contains $(wc -l </tmp/snap-mid/shard752) lines ($(wc -c </tmp/snap-mid/shard752) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'shard752'
+  sanity:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/shard752 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  sLuckValue:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Mixed precision is being split
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; /usr/bin/ls /etc/profile.d | pr -3 -t; true ; } > /tmp/snap-mid/MVdu
+            echo "The handoff file at /tmp/snap-mid/MVdu contains $(wc -l </tmp/snap-mid/MVdu) lines ($(wc -c </tmp/snap-mid/MVdu) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'MVdu'
+  feb16-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  wrapper-track:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: resolving subnet as we go
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; touch "/tmp/snake.garlic.log" && realpath "/tmp/snake.garlic.log"; true ; } > /tmp/snap-mid/hSDoqkF
+            echo "The handoff file at /tmp/snap-mid/hSDoqkF contains $(wc -l </tmp/snap-mid/hSDoqkF) lines ($(wc -c </tmp/snap-mid/hSDoqkF) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'hSDoqkF'
+  node20-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/hSDoqkF 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  VARP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Currently sharding the batch size
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; grep -i -E 'tmpfs|rw|sysfs' /proc/mounts | tail -n 3; true ; } > /tmp/snap-mid/z4
+            echo "The handoff file at /tmp/snap-mid/z4 contains $(wc -l </tmp/snap-mid/z4) lines ($(wc -c </tmp/snap-mid/z4) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'z4'
+  ga-v9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/z4 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  c:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Initiate open for the settings gear
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; if [ -d /nonexistent ] ; then echo "true"; elif [ -e /tmp ] ; then echo maybe; else echo "false"; fi; true ; } > /tmp/snap-mid/filterSparkSilentBog
+            echo "The handoff file at /tmp/snap-mid/filterSparkSilentBog contains $(wc -l </tmp/snap-mid/filterSparkSilentBog) lines ($(wc -c </tmp/snap-mid/filterSparkSilentBog) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'filterSparkSilentBog'
+  v5-edge3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/filterSparkSilentBog 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  phone_pulse_script:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Fact check status update attempt 7
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; echo '3 jobs pending'|tee /tmp/wolf.conf /tmp/new-addon.bak >/dev/null && cat /tmp/new-addon.bak; true ; } > /tmp/snap-mid/glintcrisp
+            echo "The handoff file at /tmp/snap-mid/glintcrisp contains $(wc -l </tmp/snap-mid/glintcrisp) lines ($(wc -c </tmp/snap-mid/glintcrisp) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'glintcrisp'
+  cook-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  Donuts:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: 10 audio bank randomize
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; echo "back in 5"| cut -c1-10; true ; } > /tmp/snap-mid/snapshot-v3.11.0
+            echo "The handoff file at /tmp/snap-mid/snapshot-v3.11.0 contains $(wc -l </tmp/snap-mid/snapshot-v3.11.0) lines ($(wc -c </tmp/snap-mid/snapshot-v3.11.0) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'snapshot-v3.11.0'
+  ci-new:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/snapshot-v3.11.0 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  temp_crate:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Vanquish specimen tray
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; \ls -S -a ~ | grep -c .; true ; } > /tmp/snap-mid/229.152.120.93
+            echo "The handoff file at /tmp/snap-mid/229.152.120.93 contains $(wc -l </tmp/snap-mid/229.152.120.93) lines ($(wc -c </tmp/snap-mid/229.152.120.93) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - '229.152.120.93'
+  verify-full-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/229.152.120.93 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  XrayMike:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Storage before staining
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; printf 'host=cache-a\nport=2074\nuser=eva\ndebug=true\n' > "${TMPDIR:-/tmp}/DEBUG_SEED.conf" && grep ^port "${TMPDIR:-/tmp}/DEBUG_SEED.conf" | cut -d= -f2; true ; } > /tmp/snap-mid/ORD-2026-63129
+            echo "The handoff file at /tmp/snap-mid/ORD-2026-63129 contains $(wc -l </tmp/snap-mid/ORD-2026-63129) lines ($(wc -c </tmp/snap-mid/ORD-2026-63129) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'ORD-2026-63129'
+  v8-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/ORD-2026-63129 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  hdr_inst:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: First pass release zip sync
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; builtin echo 'v1.2.3 released'; true ; } > /tmp/snap-mid/m4pl3admin
+            echo "The handoff file at /tmp/snap-mid/m4pl3admin contains $(wc -l </tmp/snap-mid/m4pl3admin) lines ($(wc -c </tmp/snap-mid/m4pl3admin) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'm4pl3admin'
+  hotel:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  iter_id:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: NODE FD30 RETRY
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; awk -v x=82 -v y=8 'BEGIN{print sqrt(x*x + y*y)}'; true ; } > /tmp/snap-mid/scratch120cd23
+            echo "The handoff file at /tmp/snap-mid/scratch120cd23 contains $(wc -l </tmp/snap-mid/scratch120cd23) lines ($(wc -c </tmp/snap-mid/scratch120cd23) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'scratch120cd23'
+  orion:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/scratch120cd23 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  pseudo_fork:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: One more tagging
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/ledger-review" && cd "/tmp/ledger-review" && touch lime apple lemon && ls && cd - >/dev/null; true ; } > /tmp/snap-mid/thicketYieldClientQuick
+            echo "The handoff file at /tmp/snap-mid/thicketYieldClientQuick contains $(wc -l </tmp/snap-mid/thicketYieldClientQuick) lines ($(wc -c </tmp/snap-mid/thicketYieldClientQuick) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'thicketYieldClientQuick'
+  india-7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/thicketYieldClientQuick 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  ay51:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Relocate the chaos scenarios out of prod
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; seq 1 2 22 | sort -n | uniq | head -8; true ; } > /tmp/snap-mid/TICKET_024136
+            echo "The handoff file at /tmp/snap-mid/TICKET_024136 contains $(wc -l </tmp/snap-mid/TICKET_024136) lines ($(wc -c </tmp/snap-mid/TICKET_024136) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'TICKET_024136'
+  ci-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/TICKET_024136 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  DEPT-CHG-KEY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: querying stale rows in background
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; if grep -q '^ID=' /etc/os-release;then echo 'good'; else echo 'bad'; fi; true ; } > /tmp/snap-mid/IMG_16464
+            echo "The handoff file at /tmp/snap-mid/IMG_16464 contains $(wc -l </tmp/snap-mid/IMG_16464) lines ($(wc -c </tmp/snap-mid/IMG_16464) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'IMG_16464'
+  fix-session-timeout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/IMG_16464 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  sin_kw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Vectors to streaming
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; cut -d= -f2- /etc/os-release | rev | tr -d '[:digit:]' | cut -c1-15; true ; } > /tmp/snap-mid/20230511
+            echo "The handoff file at /tmp/snap-mid/20230511 contains $(wc -l </tmp/snap-mid/20230511) lines ($(wc -c </tmp/snap-mid/20230511) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - '20230511'
+  india:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/20230511 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  titleMu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Knight grounding
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -exec echo {} \; 2> /dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/snap-mid/e2rw9XdMC9IULg3nweHv
+            echo "The handoff file at /tmp/snap-mid/e2rw9XdMC9IULg3nweHv contains $(wc -l </tmp/snap-mid/e2rw9XdMC9IULg3nweHv) lines ($(wc -c </tmp/snap-mid/e2rw9XdMC9IULg3nweHv) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'e2rw9XdMC9IULg3nweHv'
+  v2-edge:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/e2rw9XdMC9IULg3nweHv 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  promptExpandInputInternal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Fine Tune Eval Harness Stage
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; command ls -A /etc/skel | pr -3 -t; true ; } > /tmp/snap-mid/teal-bramble
+            echo "The handoff file at /tmp/snap-mid/teal-bramble contains $(wc -l </tmp/snap-mid/teal-bramble) lines ($(wc -c </tmp/snap-mid/teal-bramble) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'teal-bramble'
+  preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/teal-bramble 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  calc_074471_locked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Ops duplicate photo sync
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep --only-matching --ignore-case '/var' | tail --lines=3; true ; } > /tmp/snap-mid/MAPLE_LAZY_PROTON
+            echo "The handoff file at /tmp/snap-mid/MAPLE_LAZY_PROTON contains $(wc -l </tmp/snap-mid/MAPLE_LAZY_PROTON) lines ($(wc -c </tmp/snap-mid/MAPLE_LAZY_PROTON) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'MAPLE_LAZY_PROTON'
+  package:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MAPLE_LAZY_PROTON 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  frame-city-birch:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: l 14 damaged goods staging
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; lscpu --parse=CPU,CORE | tail -4; true ; } > /tmp/snap-mid/glint.host
+            echo "The handoff file at /tmp/snap-mid/glint.host contains $(wc -l </tmp/snap-mid/glint.host) lines ($(wc -c </tmp/snap-mid/glint.host) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'glint.host'
+  romeo:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/glint.host 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  rst_req_hr:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Cache the eval harness fp16
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; find /dev -type f ! -name '*random' -mtime -365 -exec md5sum {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/snap-mid/blake_a00ff62
+            echo "The handoff file at /tmp/snap-mid/blake_a00ff62 contains $(wc -l </tmp/snap-mid/blake_a00ff62) lines ($(wc -c </tmp/snap-mid/blake_a00ff62) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'blake_a00ff62'
+  ed-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/blake_a00ff62 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  secondary_refs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: scan 251e
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f -printf '%s\n' 2>/dev/null | head -n 3 | awk 'NR==1{m=$1} $1>m{m=$1} END{print m}'; true ; } > /tmp/snap-mid/bond.vector.shard
+            echo "The handoff file at /tmp/snap-mid/bond.vector.shard contains $(wc -l </tmp/snap-mid/bond.vector.shard) lines ($(wc -c </tmp/snap-mid/bond.vector.shard) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'bond.vector.shard'
+  refactor-2455:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/bond.vector.shard 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  BlockingPixelRenderer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Always pause the swap space
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; grep -hir --include="*.conf" --exclude-dir="backup" "#" /etc/skel 2>/dev/null | wc -l; true ; } > /tmp/snap-mid/RECEIPT_SILENT
+            echo "The handoff file at /tmp/snap-mid/RECEIPT_SILENT contains $(wc -l </tmp/snap-mid/RECEIPT_SILENT) lines ($(wc -c </tmp/snap-mid/RECEIPT_SILENT) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'RECEIPT_SILENT'
+  tb-alt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  LAYER_010906:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: I own accessibility audit spot check
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; { date; uname -r; whoami; } >'/tmp/keys-cache.csv' && cat '/tmp/keys-cache.csv'; true ; } > /tmp/snap-mid/draft_868f
+            echo "The handoff file at /tmp/snap-mid/draft_868f contains $(wc -l </tmp/snap-mid/draft_868f) lines ($(wc -c </tmp/snap-mid/draft_868f) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'draft_868f'
+  validate-quick-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  dispatchGPUs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Randomize Skill Tree For Console
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; ls -o /lib | nl; true ; } > /tmp/snap-mid/2026-05-06T01-00
+            echo "The handoff file at /tmp/snap-mid/2026-05-06T01-00 contains $(wc -l </tmp/snap-mid/2026-05-06T01-00) lines ($(wc -c </tmp/snap-mid/2026-05-06T01-00) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - '2026-05-06T01-00'
+  verify-staging-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/2026-05-06T01-00 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  amt_kw_mul:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: TODO archival later
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; echo 76 86 14 86 67 | tr ' ' '\n' | awk '{s+=$1} END {print s/NR}'; true ; } > /tmp/snap-mid/ll
+            echo "The handoff file at /tmp/snap-mid/ll contains $(wc -l </tmp/snap-mid/ll) lines ($(wc -c </tmp/snap-mid/ll) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'll'
+  wip-oauth-timeout:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/ll 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  metaLenMin:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Turn off the backup battery
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep -v -i 'sh$' | sort | head -n 3; true ; } > /tmp/snap-mid/batch_540
+            echo "The handoff file at /tmp/snap-mid/batch_540 contains $(wc -l </tmp/snap-mid/batch_540) lines ($(wc -c </tmp/snap-mid/batch_540) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'batch_540'
+  bun-bench:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/batch_540 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  thunder-seek-setup-rect-poll:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Encryption Of The Oauth Scopes
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; printenv|sort|sed 's/=.*//'; true ; } > /tmp/snap-mid/MVI37027
+            echo "The handoff file at /tmp/snap-mid/MVI37027 contains $(wc -l </tmp/snap-mid/MVI37027) lines ($(wc -c </tmp/snap-mid/MVI37027) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'MVI37027'
+  t-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVI37027 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+  yt:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Lint the perf baseline
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; compgen -v | sort | tail --lines=3; true ; } > /tmp/snap-mid/z8x4gqv7
+            echo "The handoff file at /tmp/snap-mid/z8x4gqv7 contains $(wc -l </tmp/snap-mid/z8x4gqv7) lines ($(wc -c </tmp/snap-mid/z8x4gqv7) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'z8x4gqv7'
+  QA_STAGE_3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Receive handoff
+          command: |
+            awk 'END{print NR,"records in",FILENAME}' /tmp/snap-mid/MVdu 2>/dev/null || true
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 1 -q --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: tar -xjf logs-tmp.tar.bz2
+      - run:
+          name: Workspace summary
+          command: ls -la
+      - run:
+          command: "$PWD/load-thread"
+
+  p_new:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Survey the parking passes for leavers
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; echo "mission accomplished" | sed "s,mission,keys,"; true ; } > /tmp/snap-mid/teal-bramble
+            echo "The handoff file at /tmp/snap-mid/teal-bramble contains $(wc -l </tmp/snap-mid/teal-bramble) lines ($(wc -c </tmp/snap-mid/teal-bramble) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'teal-bramble'
+  TZ_PUBLIC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Resume count unzip
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; for w in {0..4}; do sleep 0.1; echo "$w"; done; true ; } > /tmp/snap-mid/filterSparkSilentBog
+            echo "The handoff file at /tmp/snap-mid/filterSparkSilentBog contains $(wc -l </tmp/snap-mid/filterSparkSilentBog) lines ($(wc -c </tmp/snap-mid/filterSparkSilentBog) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'filterSparkSilentBog'
+  Send-LimitStatus:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Mix smart meter
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; dirname '/tmp/north.stub.csv'; true ; } > /tmp/snap-mid/IMG_16464
+            echo "The handoff file at /tmp/snap-mid/IMG_16464 contains $(wc -l </tmp/snap-mid/IMG_16464) lines ($(wc -c </tmp/snap-mid/IMG_16464) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'IMG_16464'
+  Write-RuleName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Prune the loss curve with lr 1e3
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; if test -S /dev/log; then echo good; fi; true ; } > /tmp/snap-mid/MVI37027
+            echo "The handoff file at /tmp/snap-mid/MVI37027 contains $(wc -l </tmp/snap-mid/MVI37027) lines ($(wc -c </tmp/snap-mid/MVI37027) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'MVI37027'
+  SPRINT_202608:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: BLOCKED on the year end pack
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; grep -rlI --include='*.d' if /usr/share/doc/bash | sort | head -n 2; true ; } > /tmp/snap-mid/shard752
+            echo "The handoff file at /tmp/snap-mid/shard752 contains $(wc -l </tmp/snap-mid/shard752) lines ($(wc -c </tmp/snap-mid/shard752) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'shard752'
+  f32fc5a249d5cb:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Mask The Kernel
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; command -v find; true ; } > /tmp/snap-mid/glint.host
+            echo "The handoff file at /tmp/snap-mid/glint.host contains $(wc -l </tmp/snap-mid/glint.host) lines ($(wc -c </tmp/snap-mid/glint.host) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'glint.host'
+  func_syn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Nudge the board as usual
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\niris,nairobi,54\nheidi,prague,71\neva,osaka,94\nraj,sydney,76\n' | sort -t, -k3 -n; true ; } > /tmp/snap-mid/hSDoqkF
+            echo "The handoff file at /tmp/snap-mid/hSDoqkF contains $(wc -l </tmp/snap-mid/hSDoqkF) lines ($(wc -c </tmp/snap-mid/hSDoqkF) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'hSDoqkF'
+  fin1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Calibrate the sampler epoch 20
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; for elem in `seq 3`; do echo "${elem} squared is $((elem**2))"; done | wc -l; true ; } > /tmp/snap-mid/ll
+            echo "The handoff file at /tmp/snap-mid/ll contains $(wc -l </tmp/snap-mid/ll) lines ($(wc -c </tmp/snap-mid/ll) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'll'
+  nInstances:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Migration note versioning routine
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; printf '%s\n' "tests passed" | md5sum; true ; } > /tmp/snap-mid/ORD-2026-63129
+            echo "The handoff file at /tmp/snap-mid/ORD-2026-63129 contains $(wc -l </tmp/snap-mid/ORD-2026-63129) lines ($(wc -c </tmp/snap-mid/ORD-2026-63129) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'ORD-2026-63129'
+  has-thumb:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Perform mux of the stereo mix
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; shuf -i 1-794 -n 15 | sort -n | tail -n 1; true ; } > /tmp/snap-mid/e2rw9XdMC9IULg3nweHv
+            echo "The handoff file at /tmp/snap-mid/e2rw9XdMC9IULg3nweHv contains $(wc -l </tmp/snap-mid/e2rw9XdMC9IULg3nweHv) lines ($(wc -c </tmp/snap-mid/e2rw9XdMC9IULg3nweHv) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'e2rw9XdMC9IULg3nweHv'
+  oscar-castle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Our turn to titrate the gel
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; mkfifo "/tmp/test-build-vector-plan.list" && ls -l "/tmp/test-build-vector-plan.list" && rm "/tmp/test-build-vector-plan.list"; true ; } > /tmp/snap-mid/scratch120cd23
+            echo "The handoff file at /tmp/snap-mid/scratch120cd23 contains $(wc -l </tmp/snap-mid/scratch120cd23) lines ($(wc -c </tmp/snap-mid/scratch120cd23) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'scratch120cd23'
+  fact_scene:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Backfill 2027 q3
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; awk -F':' '$3 == 0 {printf "%-16s %s\n", $1, $7}' /etc/group | nl; true ; } > /tmp/snap-mid/229.152.120.93
+            echo "The handoff file at /tmp/snap-mid/229.152.120.93 contains $(wc -l </tmp/snap-mid/229.152.120.93) lines ($(wc -c </tmp/snap-mid/229.152.120.93) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - '229.152.120.93'
+  activedisable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Objective F format
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; seq 1 8 | awk '{print $1, $1*$1}' | tail -3; true ; } > /tmp/snap-mid/blake_a00ff62
+            echo "The handoff file at /tmp/snap-mid/blake_a00ff62 contains $(wc -l </tmp/snap-mid/blake_a00ff62) lines ($(wc -c </tmp/snap-mid/blake_a00ff62) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'blake_a00ff62'
+  xs3ijx56:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Provision
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; sha256sum <(echo 'retrying in 5 seconds'); true ; } > /tmp/snap-mid/thicketYieldClientQuick
+            echo "The handoff file at /tmp/snap-mid/thicketYieldClientQuick contains $(wc -l </tmp/snap-mid/thicketYieldClientQuick) lines ($(wc -c </tmp/snap-mid/thicketYieldClientQuick) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'thicketYieldClientQuick'
+  psi_pred:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Light Leaderboard At 60 Fps
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; diff --version | head -n 1; true ; } > /tmp/snap-mid/bond.vector.shard
+            echo "The handoff file at /tmp/snap-mid/bond.vector.shard contains $(wc -l </tmp/snap-mid/bond.vector.shard) lines ($(wc -c </tmp/snap-mid/bond.vector.shard) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'bond.vector.shard'
+  toggleInstanceAnimated:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Unload after the merge
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; echo 'release notes ready' | cut -d' ' -f1; true ; } > /tmp/snap-mid/TICKET_024136
+            echo "The handoff file at /tmp/snap-mid/TICKET_024136 contains $(wc -l </tmp/snap-mid/TICKET_024136) lines ($(wc -c </tmp/snap-mid/TICKET_024136) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'TICKET_024136'
+  onspawn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Please do archive the team roster
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; yes batch | head -c 24; echo; true ; } > /tmp/snap-mid/v_40714
+            echo "The handoff file at /tmp/snap-mid/v_40714 contains $(wc -l </tmp/snap-mid/v_40714) lines ($(wc -c </tmp/snap-mid/v_40714) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'v_40714'
+  Ai0:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Hibernate Then Reap
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; lscpu | head; true ; } > /tmp/snap-mid/snapshot-v3.11.0
+            echo "The handoff file at /tmp/snap-mid/snapshot-v3.11.0 contains $(wc -l </tmp/snap-mid/snapshot-v3.11.0) lines ($(wc -c </tmp/snap-mid/snapshot-v3.11.0) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - 'snapshot-v3.11.0'
+  category-pretzel-row-banana:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/snap-mid
+      - run:
+          name: Soundcheck audit
+          command: |
+            mkdir -p /tmp/snap-mid
+            { set +o pipefail 2>/dev/null; for f in "$HOME"/.bash*; do ls -l "$f"; done; true ; } > /tmp/snap-mid/20230511
+            echo "The handoff file at /tmp/snap-mid/20230511 contains $(wc -l </tmp/snap-mid/20230511) lines ($(wc -c </tmp/snap-mid/20230511) B)"
+      - persist_to_workspace:
+          root: /tmp/snap-mid
+          paths:
+            - '20230511'
+workflows:
+  test:
+    jobs:
+      - calc_074471_locked
+      - package:
+          requires:
+            - calc_074471_locked
+      - metaLenMin:
+          requires:
+            - calc_074471_locked
+      - bun-bench:
+          requires:
+            - metaLenMin
+      - dispatchGPUs:
+          requires:
+            - metaLenMin
+      - verify-staging-artifact-bundle:
+          requires:
+            - dispatchGPUs
+      - VARP:
+          requires:
+            - dispatchGPUs
+      - ga-v9:
+          requires:
+            - VARP
+      - promptExpandInputInternal
+      - p_new:
+          requires:
+            - promptExpandInputInternal
+      - preview:
+          requires:
+            - p_new
+      - c:
+          requires:
+            - p_new
+      - TZ_PUBLIC:
+          requires:
+            - c
+      - v5-edge3:
+          requires:
+            - TZ_PUBLIC
+      - DEPT-CHG-KEY:
+          requires:
+            - TZ_PUBLIC
+      - Send-LimitStatus:
+          requires:
+            - DEPT-CHG-KEY
+      - fix-session-timeout:
+          requires:
+            - Send-LimitStatus
+      - thunder-seek-setup-rect-poll:
+          requires:
+            - Send-LimitStatus
+      - Write-RuleName:
+          requires:
+            - thunder-seek-setup-rect-poll
+      - t-v2:
+          requires:
+            - Write-RuleName
+      - NoiseDead_manifest:
+          requires:
+            - Write-RuleName
+      - SPRINT_202608:
+          requires:
+            - NoiseDead_manifest
+      - sanity:
+          requires:
+            - SPRINT_202608
+      - frame-city-birch:
+          requires:
+            - SPRINT_202608
+      - f32fc5a249d5cb:
+          requires:
+            - frame-city-birch
+      - romeo:
+          requires:
+            - f32fc5a249d5cb
+      - wrapper-track:
+          requires:
+            - f32fc5a249d5cb
+      - func_syn:
+          requires:
+            - wrapper-track
+      - node20-release:
+          requires:
+            - func_syn
+      - amt_kw_mul:
+          requires:
+            - func_syn
+      - fin1:
+          requires:
+            - amt_kw_mul
+      - wip-oauth-timeout:
+          requires:
+            - fin1
+      - XrayMike:
+          requires:
+            - fin1
+      - nInstances:
+          requires:
+            - XrayMike
+      - v8-preview:
+          requires:
+            - nInstances
+      - titleMu
+      - has-thumb:
+          requires:
+            - titleMu
+      - v2-edge:
+          requires:
+            - has-thumb
+      - iter_id:
+          requires:
+            - has-thumb
+      - oscar-castle:
+          requires:
+            - iter_id
+      - orion:
+          requires:
+            - oscar-castle
+      - temp_crate:
+          requires:
+            - oscar-castle
+      - fact_scene:
+          requires:
+            - temp_crate
+      - verify-full-artifact-bundle:
+          requires:
+            - fact_scene
+      - rst_req_hr:
+          requires:
+            - fact_scene
+      - activedisable:
+          requires:
+            - rst_req_hr
+      - ed-smoke:
+          requires:
+            - activedisable
+      - pseudo_fork
+      - xs3ijx56:
+          requires:
+            - pseudo_fork
+      - india-7:
+          requires:
+            - xs3ijx56
+      - secondary_refs:
+          requires:
+            - xs3ijx56
+      - psi_pred:
+          requires:
+            - secondary_refs
+      - refactor-2455:
+          requires:
+            - psi_pred
+      - ay51:
+          requires:
+            - psi_pred
+      - toggleInstanceAnimated:
+          requires:
+            - ay51
+      - ci-2:
+          requires:
+            - toggleInstanceAnimated
+      - MTLMutableCart:
+          requires:
+            - toggleInstanceAnimated
+      - onspawn:
+          requires:
+            - MTLMutableCart
+      - update-session:
+          requires:
+            - onspawn
+      - Donuts:
+          requires:
+            - onspawn
+      - Ai0:
+          requires:
+            - Donuts
+      - ci-new:
+          requires:
+            - Ai0
+      - sin_kw:
+          requires:
+            - Ai0
+      - category-pretzel-row-banana:
+          requires:
+            - sin_kw
+      - india:
+          requires:
+            - category-pretzel-row-banana
+      - sLuckValue
+      - hdr_inst
+      - feb16-rev:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - hotel:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - validate-quick-regression-suite:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - v9-nightly5:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - QA_STAGE_3:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - cook-it:
+          requires:
+            - sLuckValue
+            - hdr_inst
+      - tb-alt:
+          requires:
+            - sLuckValue
+            - hdr_inst
